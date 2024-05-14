@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/lustrefs/disk/project/lt900054-ai2416/400850-Tong/table-query-engine/./scripts/dreamers.py", line 7, in <module>
+    from table_query_engine import initialize_query_engine
+ModuleNotFoundError: No module named 'table_query_engine'
+srun: error: lanta-g-011: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=864123.0

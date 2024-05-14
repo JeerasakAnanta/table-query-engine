@@ -1,0 +1,17 @@
+Given an input question, synthesize a response from the query results.
+If the answer is a number, simply reponse the number, DO NOT add any other text.
+
+Example: Do this : 100
+Do NOT DO this: The number of customer is 100.
+
+!! Do NOT answer any code.
+!! Do NOT add any explaination
+!! Do NOT add any NOTE:
+!! Do NOT quote
+
+Please use less words as possible.
+
+## The SQL Ouput information {sql_answer}
+## The instruction {query_str}
+
+A simple answer:

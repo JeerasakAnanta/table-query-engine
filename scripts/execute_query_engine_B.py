@@ -51,7 +51,7 @@ import torch
 
 engine = create_engine('sqlite://', echo=False)
 model_name = "/project/lt900054-ai2416/train/SuperAI_LLM_FineTune/checkpoint"
-df = pd.read_csv("/project/lt900054-ai2416/Data_Test_Table/TBL4-Online-Shopping/TBL4-Online-Shopping-Dataset.csv")
+df = pd.read_csv("/project/lt900054-ai2416/Data_Test_Table/Financial/Financial Statements.csv")
 df.to_sql('TableBase', con=engine)
 
 sql_database = SQLDatabase(engine, include_tables=["TableBase"])
@@ -81,78 +81,119 @@ def sql_parser(query: str):
 parser = FnComponent(fn=sql_parser)
 
 table_schema = """
-### CustomerID
-Description: Unique identifier for each customer.
-
-Data Type: Numeric;
-
-### Gender
-Description: Gender of the customer (e.g., Male, Female).
+### Year
+Description: Year of financial statement
 
 Data Type: Categorical;
 
-### Location
-Description: Location or address information of the customer.
+### Company
+Description: the symbol of company e.g. AAPL is Apple, MSFT is Microsoft
 
 Data Type: Text;
-### Tenure_Months
-Description: Number of months the customer has been associated with the platform.
+
+### Category
+Description: The industry of each company.
+
+Data Type: Categorical;
+
+### Market Cap(in B USD)
+Description: Market Capacity of each company.
+
 Data Type: Numeric;
 
-### Transaction_ID
-Description: Unique identifier for each transaction.
+### Revenue
+Description: Revenue in each company.
 
 Data Type: Numeric;
 
-### Transaction_Date
-Description: Date of the transaction.
+### Gross Profit
+Description: the profit a Company makes after variable production costs but before fixed costs.
+
+Data Type: Numeric;
+
+### Net Income
+Description: The amount of accounting profit a company has left over after paying off all its expenses.
+
+Data Type: Numeric;
+
+### Earning Per Share
+Description: A company's net income subtracted by preferred dividends and then divided by the average number of common shares outstanding.
+
+Data Type: Numeric;
+
+### EBITDA:
+Description: earnings before interest, taxes, depreciation, and amortization.
+
+Data Type: Numeric;
+
+### Share Holder Equity
+Description: the amount that the owners of a company have invested in their business.
+
+Data Type: Numeric;
+
+### Cash Flow from Operating
+Description: the amount of money a company brings in from its ongoing, regular business activities, such as manufacturing and selling goods or providing a service to customers.
+
+Data Type: Numeric;
+
+### Cash Flow from Investing
+Description: Any inflows or outflows of cash from a company's long-term investments.
+
+Data Type: Numeric;
+
+### Cash Flow from Financial Activities
+Description: the net amount of funding a company generates in a given time period. Finance activities include the issuance and repayment of equity, payment of dividends, issuance and repayment of debt, and capital lease obligations.
+
+Data Type: Numeric;
+
+### Current Ratio
+Description: a company's ability to pay current, or short-term, liabilities (debt and payables) with its current, or short-term, assets (cash, inventory, and receivables).
 
 Data Type: Date;
 
-### Product_SKU
-Description: Stock Keeping Unit (SKU) identifier for the product.
-
-Data Type: Text;
-
-### Product_Description
-Description: Description of the product.
-
-Data Type: Text;
-
-### Product_Category:
-Description: Category to which the product belongs.
-
-Data Type: Categorical;
-
-### Quantity
-Description: Quantity of the product purchased in the transaction.
+### Debt/Equity Ratio
+Description: used to evaluate a company’s financial leverage and is calculated by dividing a company’s total liabilities by its shareholder equity.
 
 Data Type: Numeric;
 
-### Avg_Price
-Description: Average price of the product.
+### ROE
+Description: gauge of a corporation's profitability and how efficiently it generates those profits
 
 Data Type: Numeric;
 
-### Total_Price
-Description: Total price of the product exclude delivery charges.
+### ROA
+Description: measures the profitability of a company in relation to its total assets
 
 Data Type: Numeric;
 
-### Delivery_Charges
-Description: Charges associated with the delivery of the product.
+### ROI
+Description: A ratio that measures the profitability of an investment by comparing the gain or loss to its cost
 
 Data Type: Numeric;
 
-### Date
-Description: Date of the transaction (potentially redundant with Transaction_Date).
+### Net Profit Margin
+Description: the percentage of total income you get to keep after all expenses and taxes are paid
 
-Data Type: Date;
+Data Type: Numeric;
 
-### Month
-Description: Month of the transaction.
+### Free Cash Flow per Share
+Description: measure of a company's financial flexibility that is determined by dividing free cash flow by the total number of shares outstanding
 
-Data Type: Categorical;
+Data Type: Numeric;
+
+### Return on Tangible Equity
+Description: the net profit (after interest and tax) as a percentage of the (average) tangible equity or shareholders' funds
+
+Data Type: Numeric;
+
+### Number of Employees
+Description: Number of Employee in each company
+
+Data Type: Numeric;
+
+### Inflation Rate(in US)
+Description: the rate of increase in prices over a given period of time in US
+Data Type: Numeric;
 """
 
 text2sql_prompt = PromptTemplate(
@@ -228,7 +269,7 @@ if __name__ == "__main__":
         model=model,
         tokenizer=tokenizer,
         context_window=384,
-        max_new_tokens=128,
+        max_new_tokens=32,
         tokenizer_kwargs={"max_length": 384},
         generate_kwargs={"temperature": 0.1},
     )

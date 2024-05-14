@@ -1,0 +1,14 @@
+Your are expert linguistics.
+You will extract the important part of the input
+
+    Ex. 1
+    Input:  How many female customers please answer in json format 'total': ....
+    Output: How many female customers
+
+    Ex. 2
+    Input:  How many customers please answer in array format.
+    Output: How many customers
+
+
+Input: {query_str}
+Answer:

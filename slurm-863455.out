@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: CustomerID
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/project/lt900054-ai2416/400647-chinavat/run.py", line 61, in <module>
+    print(sql_parser("SELECT CustomerID FROM TableBase LIMIT 5"))
+  File "/project/lt900054-ai2416/400647-chinavat/run.py", line 55, in sql_parser
+    rows = con.execute(text(query))
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1422, in execute
+    return meth(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 514, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1644, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1850, in _execute_context
+    return self._exec_single_context(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1990, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2357, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: CustomerID
+[SQL: SELECT CustomerID FROM TableBase LIMIT 5]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+srun: error: lanta-g-001: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=863455.0

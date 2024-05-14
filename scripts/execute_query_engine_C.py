@@ -51,7 +51,7 @@ import torch
 
 engine = create_engine('sqlite://', echo=False)
 model_name = "/project/lt900054-ai2416/train/SuperAI_LLM_FineTune/checkpoint"
-df = pd.read_csv("/project/lt900054-ai2416/Data_Test_Table/TBL4-Online-Shopping/TBL4-Online-Shopping-Dataset.csv")
+df = pd.read_csv("/project/lt900054-ai2416/Data_Test_Table/Spotify/spotify-2023.csv", encoding="latin1")
 df.to_sql('TableBase', con=engine)
 
 sql_database = SQLDatabase(engine, include_tables=["TableBase"])
@@ -81,78 +81,125 @@ def sql_parser(query: str):
 parser = FnComponent(fn=sql_parser)
 
 table_schema = """
-### CustomerID
-Description: Unique identifier for each customer.
-
-Data Type: Numeric;
-
-### Gender
-Description: Gender of the customer (e.g., Male, Female).
-
-Data Type: Categorical;
-
-### Location
-Description: Location or address information of the customer.
-
-Data Type: Text;
-### Tenure_Months
-Description: Number of months the customer has been associated with the platform.
-Data Type: Numeric;
-
-### Transaction_ID
-Description: Unique identifier for each transaction.
-
-Data Type: Numeric;
-
-### Transaction_Date
-Description: Date of the transaction.
-
-Data Type: Date;
-
-### Product_SKU
-Description: Stock Keeping Unit (SKU) identifier for the product.
+### track_name
+Description: Name of the song
 
 Data Type: Text;
 
-### Product_Description
-Description: Description of the product.
+### artist(s)_name
+Description: Name of the artist(s) of the song
 
 Data Type: Text;
 
-### Product_Category:
-Description: Category to which the product belongs.
+### artist_count
+Description: Number of artists contributing to the song
+
+Data Type: Numeric;
+
+### released_year
+Description: Year when the song was released
+
+Data Type: Numeric;
+
+### released_month
+Description: Month when the song was released
+
+Data Type: Numeric;
+
+### released_day
+Description: Day of the month when the song was released
+
+Data Type: Numeric;
+
+### in_spotify_playlists
+Description: Number of Spotify playlists the song is included in
+
+Data Type: Numeric;
+
+### in_spotify_charts
+Description: Presence and rank of the song on Spotify charts
+
+Data Type: Numeric;
+
+### streams
+Description: Total number of streams on Spotify
+
+Data Type: object;
+
+### in_apple_playlists
+Description: Number of Apple Music playlists the song is included in
+
+Data Type: Numeric;
+
+### in_apple_charts
+Description: Presence and rank of the song on Apple Music charts
+
+Data Type: Numeric;
+
+### in_deezer_playlists
+Description: Number of Deezer playlists the song is included in
+
+Data Type: Numeric;
+
+### in_deezer_charts
+Description: Presence and rank of the song on Deezer charts
+
+Data Type: Numeric;
+
+### in_shazam_charts
+Description: Presence and rank of the song on Shazam charts
+
+Data Type: object;
+
+### bpm
+Description: Beats per minute, a measure of song tempo
+
+Data Type: Numeric;
+
+### key
+Description: Key of the song
 
 Data Type: Categorical;
 
-### Quantity
-Description: Quantity of the product purchased in the transaction.
-
-Data Type: Numeric;
-
-### Avg_Price
-Description: Average price of the product.
-
-Data Type: Numeric;
-
-### Total_Price
-Description: Total price of the product exclude delivery charges.
-
-Data Type: Numeric;
-
-### Delivery_Charges
-Description: Charges associated with the delivery of the product.
-
-Data Type: Numeric;
-
-### Date
-Description: Date of the transaction (potentially redundant with Transaction_Date).
-
-Data Type: Date;
-
-### Month
-Description: Month of the transaction.
+### mode
+Description: Mode of the song (major or minor)
 
 Data Type: Categorical;
+
+### danceability_%
+Description: Percentage indicating how suitable the song is for dancing
+
+Data Type: Numeric;
+
+### valence_%
+Description: Positivity of the song's musical content
+
+Data Type: Numeric;
+
+### energy_%
+Description: Perceived energy level of the song
+
+Data Type: Numeric;
+
+### acousticness_%
+Description: Amount of acoustic sound in the song
+
+Data Type: Numeric;
+
+### instrumentalness_%
+Description: Amount of instrumental content in the song
+
+Data Type: Numeric;
+
+### liveness_%
+Description: Presence of live performance elements
+
+Data Type: Numeric;
+
+### speechiness_%
+Description: Amount of spoken words in the song
+
+Data Type: Numeric;
 """
 
 text2sql_prompt = PromptTemplate(
@@ -187,12 +234,12 @@ refine_prompt = PromptTemplate(
     """
 )
 
-# nf4_config = BitsAndBytesConfig(
-#    load_in_4bit=True,
-#    bnb_4bit_quant_type="nf4",
-#    bnb_4bit_use_double_quant=True,
-#    bnb_4bit_compute_dtype=torch.bfloat16
-# )
+nf4_config = BitsAndBytesConfig(
+   load_in_4bit=True,
+   bnb_4bit_quant_type="nf4",
+   bnb_4bit_use_double_quant=True,
+   bnb_4bit_compute_dtype=torch.bfloat16
+)
 ############################
 
 if __name__ == "__main__":
@@ -212,12 +259,12 @@ if __name__ == "__main__":
     # You can edit you code HERE
     # query_engine = initialize_query_engine()
     
+    
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         device_map = 'auto',
         torch_dtype = torch.float16,
     )
-
     tokenizer = AutoTokenizer.from_pretrained(
         model_name,
         # device_map = 'cuda',

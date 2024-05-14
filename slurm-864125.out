@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/lustrefs/disk/project/lt900054-ai2416/400850-Tong/table-query-engine/./scripts/dreamers.py", line 306, in <module>
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/project/lt900054-ai2416/400850-Tong/env/final_env/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 563, in from_pretrained
+    return model_class.from_pretrained(
+  File "/project/lt900054-ai2416/400850-Tong/env/final_env/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3260, in from_pretrained
+    raise EnvironmentError(
+OSError: Error no file named pytorch_model.bin, tf_model.h5, model.ckpt.index or flax_model.msgpack found in directory /project/lt900054-ai2416/400256-PP/SuperAI_LLM_FineTune/checkpoint_extra_1.
+srun: error: lanta-g-011: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=864125.0

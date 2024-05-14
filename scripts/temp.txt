@@ -1,0 +1,13 @@
+// ["เมืองไหนมีประชากรมากที่สุด", "เมืองที่มีประชากรมากที่สุดและน้อยที่สุดมีประชากรต่างกันกี่คน"]
+
+query_engines = NLSQLTableQueryEngine(sql_database=sql_database, tables=["TableBase"], llm=llms)
+
+    # print(query_engine.query("How many male customers are there?").response)
+
+    def query_engine(query_str):
+        templete = f"""Below is an instruction that describes a task, paired with an input that provides further context.
+        Write a response that appropriately completes the request.\n\n
+        ### Instruction:\n(sql extract)  {query_str}\n\n### Input:\n{_input}\n\n### Response:"""
+        templete2 = f"{query_str}\n\n with \n{_input}"
+        templete3 = f"{query_str}\n Data table {_input}"
+        return query_engines.query(templete3)

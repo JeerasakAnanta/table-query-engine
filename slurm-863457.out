@@ -1,0 +1,75 @@
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:492: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.1` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+Setting `pad_token_id` to `eos_token_id`:2 for open-end generation.
+[1;3;38;2;155;135;227m> Running module input with input: 
+query_str: CustomerID คนไหนมีจำนวนเงินการสั่งซื้อรวมทั้งหมดรวมค่าขนส่งมากที่สุด 5 อันดับแรก กรุณาตอบเป็น array เรียงจากมากไปน้อย
+
+[0m[1;3;38;2;155;135;227m> Running module tuning with input: 
+text_query: CustomerID คนไหนมีจำนวนเงินการสั่งซื้อรวมทั้งหมดรวมค่าขนส่งมากที่สุด 5 อันดับแรก กรุณาตอบเป็น array เรียงจากมากไปน้อย
+
+[0m[1;3;38;2;155;135;227m> Running module table_prompt with input: 
+query_str: CustomerID คนไหนมีจำนวนเงินการสั่งซื้อรวมทั้งหมดรวมค่าขนส่งมากที่สุด 5 อันดับแรก กรุณา
+
+[0m[1;3;38;2;155;135;227m> Running module text2sql_llm with input: 
+prompt: 
+    [INST] <<SYS>>
+    You are a question answering assistant. Answer the question as truthful and helpful as possible คุณคือผู้ช่วยตอบคำถาม จงตอบคำถามอย่างถูกต้องและมีประโยชน์ที่สุด
+    <</SYS>>
+   ...
+
+[0m[1;3;38;2;155;135;227m> Running module sql_parser with input: 
+response: SELECT CustomerID, SUM(Total_Price) AS Total_Sales FROM TableBase GROUP BY CustomerID ORDER BY Total_Sales DESC LIMIT 5;
+
+[0m[1;3;38;2;155;135;227m> Running module parser with input: 
+query: SELECT CustomerID, SUM(Total_Price) AS Total_Sales FROM TableBase GROUP BY CustomerID ORDER BY Total_Sales DESC LIMIT 5;
+
+Traceback (most recent call last):
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: CustomerID
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/project/lt900054-ai2416/400647-chinavat/run.py", line 234, in <module>
+    print(query_engine("CustomerID คนไหนมีจำนวนเงินการสั่งซื้อรวมทั้งหมดรวมค่าขนส่งมากที่สุด 5 อันดับแรก กรุณาตอบเป็น array เรียงจากมากไปน้อย").response)
+  File "/project/lt900054-ai2416/400647-chinavat/run.py", line 232, in __init__
+    self.response = qp.run(query_str=query_str).text
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/llama_index/core/query_pipeline/query.py", line 320, in run
+    outputs, _ = self._run(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/llama_index/core/query_pipeline/query.py", line 544, in _run
+    result_outputs, intermediates = self._run_multi(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/llama_index/core/query_pipeline/query.py", line 717, in _run_multi
+    output_dict = module.run_component(**module_input)
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/llama_index/core/base/query_pipeline/query.py", line 199, in run_component
+    component_outputs = self._run_component(**kwargs)
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/llama_index/core/query_pipeline/components/function.py", line 97, in _run_component
+    return {self.output_key: self.fn(**kwargs)}
+  File "/project/lt900054-ai2416/400647-chinavat/run.py", line 55, in sql_parser
+    rows = con.execute(text(query))
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1422, in execute
+    return meth(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 514, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1644, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1850, in _execute_context
+    return self._exec_single_context(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1990, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2357, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1971, in _exec_single_context
+    self.dialect.do_execute(
+  File "/project/lt900054-ai2416/env/prod/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 919, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: CustomerID
+[SQL: SELECT CustomerID, SUM(Total_Price) AS Total_Sales FROM TableBase GROUP BY CustomerID ORDER BY Total_Sales DESC LIMIT 5;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+[0msrun: error: lanta-g-001: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=863457.0

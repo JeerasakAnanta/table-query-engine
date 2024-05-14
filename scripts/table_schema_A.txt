@@ -1,0 +1,72 @@
+### CustomerID
+Description: Unique identifier for each customer.
+
+Data Type: Numeric;
+
+### Gender
+Description: Gender of the customer (e.g., Male, Female).
+
+Data Type: Categorical;
+
+### Location
+Description: Location or address information of the customer.
+
+Data Type: Text;
+### Tenure_Months
+Description: Number of months the customer has been associated with the platform.
+Data Type: Numeric;
+
+### Transaction_ID
+Description: Unique identifier for each transaction.
+
+Data Type: Numeric;
+
+### Transaction_Date
+Description: Date of the transaction.
+
+Data Type: Date;
+
+### Product_SKU
+Description: Stock Keeping Unit (SKU) identifier for the product.
+
+Data Type: Text;
+
+### Product_Description
+Description: Description of the product.
+
+Data Type: Text;
+
+### Product_Category:
+Description: Category to which the product belongs.
+
+Data Type: Categorical;
+
+### Quantity
+Description: Quantity of the product purchased in the transaction.
+
+Data Type: Numeric;
+
+### Avg_Price
+Description: Average price of the product.
+
+Data Type: Numeric;
+
+### Total_Price
+Description: Total price of the product exclude delivery charges.
+
+Data Type: Numeric;
+
+### Delivery_Charges
+Description: Charges associated with the delivery of the product.
+
+Data Type: Numeric;
+
+### Date
+Description: Date of the transaction (potentially redundant with Transaction_Date).
+
+Data Type: Date;
+
+### Month
+Description: Month of the transaction.
+
+Data Type: Categorical;
